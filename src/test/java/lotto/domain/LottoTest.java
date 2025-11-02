@@ -1,18 +1,16 @@
 package lotto.domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class LottoTest {
 
     @Test
-    void 당첨_번호가_정상적으로_생성된다() {
+    void 로또_번호가_정상적으로_생성된다() {
         List<Integer> validNumbers = List.of(1, 2, 3, 4, 5, 6);
 
         assertThatCode(() -> new Lotto(validNumbers))
