@@ -1,6 +1,6 @@
 package lotto.service;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import lotto.domain.LottoPrice;
@@ -17,7 +17,7 @@ public class LottoService {
     }
 
     public LottoResultDTO DrawALottoService(Lottos lottos, WinLotto winLotto) {
-        Map<Rank, Integer> lottoResult = new HashMap<>();
+        Map<Rank, Integer> lottoResult = new EnumMap<>(Rank.class);
         for (Rank rank : Rank.values()) {
             lottoResult.put(rank, 0);
         }
