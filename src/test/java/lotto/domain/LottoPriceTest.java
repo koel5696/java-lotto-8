@@ -14,7 +14,8 @@ public class LottoPriceTest {
 
     @Test
     void 구입_금액이_천의_배수가_아니면_예외가_발생한다() {
-        assertThatThrownBy(() -> new LottoPrice(10004)
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new LottoPrice(10004))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 금액은 천 단위의 양수여야 합니다.");
     }
 }
