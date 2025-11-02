@@ -15,7 +15,7 @@ public class WinLotto {
 
     private void duplicateValidate(Lotto lotto, BonusNumber bonusNumber) {
         if (lotto.contains(bonusNumber)) {
-            throw new IllegalArgumentException("[error] 보너스 번호는 기본 당첨 번호와 중복될 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 보너스 번호는 기본 당첨 번호와 중복될 수 없습니다.");
         }
     }
 

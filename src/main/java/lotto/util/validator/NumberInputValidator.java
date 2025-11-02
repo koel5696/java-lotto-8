@@ -18,7 +18,7 @@ public class NumberInputValidator {
 
     private static void emptyValidate(String numberInput) {
         if (numberInput == null || numberInput.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 빈(공백) 값이 들어 왔습니다.");
+            throw new IllegalArgumentException("[ERROR] 빈(공백) 값이 들어왔습니다.");
         }
     }
 
