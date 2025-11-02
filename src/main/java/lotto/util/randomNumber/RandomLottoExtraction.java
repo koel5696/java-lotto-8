@@ -1,6 +1,7 @@
 package lotto.util.randomNumber;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +17,8 @@ public final class RandomLottoExtraction {
     public static List<Integer> randomLottoExtraction() {
         List<Integer> newLotto = Randoms.pickUniqueNumbersInRange(LOTTO_START_NUMBER, LOTTO_LAST_NUMBER,
                 LOTTO_NUMBER_COUNT);
-        Collections.sort(newLotto);
-        return newLotto;
+        List<Integer> sortableLotto = new ArrayList<>(newLotto);
+        Collections.sort(sortableLotto);
+        return sortableLotto;
     }
 }
