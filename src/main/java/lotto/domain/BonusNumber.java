@@ -1,20 +1,14 @@
 package lotto.domain;
 
-public class BonusNumber {
-    private final int number;
+import static lotto.constants.LottoCondition.LOTTO_NUMBER_MAX;
+import static lotto.constants.LottoCondition.LOTTO_NUMBER_MIN;
 
-    public BonusNumber(int number) {
-        rangeValidate(number);
-        this.number = number;
-    }
+public record BonusNumber(int number) {
+    private static final String RANGE_ERROR_MESSAGE = "[ERROR] 보너스 번호는 1~45 사이의 정수여야 합니다";
 
-    public int getNumber() {
-        return number;
-    }
-
-    private void rangeValidate(int number) {
-        if (number < 1 || number > 45) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호는 1~45 사이여야 합니다.");
+    public BonusNumber {
+        if (number < LOTTO_NUMBER_MIN.getValue() || number > LOTTO_NUMBER_MAX.getValue()) {
+            throw new IllegalArgumentException(RANGE_ERROR_MESSAGE);
         }
     }
 }
