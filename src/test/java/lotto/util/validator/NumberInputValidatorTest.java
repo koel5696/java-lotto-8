@@ -24,7 +24,7 @@ public class NumberInputValidatorTest {
     void 문자_예외_테스트() {
         assertThatThrownBy(() -> NumberInputValidator.numberInputValidator("잘못 입력"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 자연수로 입력해주세요.");
+                .hasMessageContaining("[ERROR] 0으로 시작하지 않는 자연수만 입력할 수 있습니다.");
     }
 
     @Test
@@ -32,12 +32,5 @@ public class NumberInputValidatorTest {
         assertThatThrownBy(() -> NumberInputValidator.numberInputValidator(" "))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 빈(공백) 값이 들어왔습니다.");
-    }
-
-    @Test
-    void 제로_시작_예외_테스트() {
-        assertThatThrownBy(() -> NumberInputValidator.numberInputValidator("0005"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 자연수 입력은 0으로 시작할 수 없습니다.");
     }
 }

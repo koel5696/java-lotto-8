@@ -14,6 +14,6 @@ public class BonusNumberTest {
     void 보너스_번호의_숫자가_이상하면_예외가_발생한다() {
         assertThatThrownBy(() -> new WinLotto(new Lotto(numbers), new BonusNumber(46)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 보너스 번호는 1~45 사이여야 합니다.");
+                .hasMessageContaining("[ERROR] 보너스 번호는 1~45 사이의 정수여야 합니다");
     }
 }
