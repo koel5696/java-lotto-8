@@ -4,6 +4,9 @@ package lotto.domain;
 import java.util.Optional;
 
 public class WinLotto {
+    private static final String DUPLICATE_BONUS_NUMBER_ERROR_MESSAGE = "[ERROR] 보너스 번호는 기본 당첨 번호와 중복될 수 없습니다.";
+    private static final int NUMBER_FIVE_MATCHES = 5;
+
     private final Lotto winLotto;
     private final BonusNumber bonusNumber;
 
@@ -15,14 +18,14 @@ public class WinLotto {
 
     private void duplicateValidate(Lotto lotto, BonusNumber bonusNumber) {
         if (lotto.contains(bonusNumber)) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호는 기본 당첨 번호와 중복될 수 없습니다.");
+            throw new IllegalArgumentException(DUPLICATE_BONUS_NUMBER_ERROR_MESSAGE);
         }
     }
 
     public Optional<Rank> judgeWin(Lotto lotto) {
         int matchCount = lotto.countMatches(winLotto);
         boolean checkBonus = false;
-        if (matchCount == 5) {
+        if (matchCount == NUMBER_FIVE_MATCHES) {
             checkBonus = secondJudgeWin(lotto);
         }
         return Rank.determineWinAmount(matchCount, checkBonus);

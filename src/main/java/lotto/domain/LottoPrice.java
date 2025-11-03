@@ -1,21 +1,29 @@
 package lotto.domain;
 
 public class LottoPrice {
-    private final int value;
+    private static final String THOUSAND_MULTI_NUMBER_ERROR_MESSAGE = "[ERROR] 금액은 천 단위의 양수여야 합니다.";
+    private static final int LOTTO_ONE_UINT_PRICE = 1000;
+    private static final int PERCENTAGE = 100;
+
+    private final int lottoPrice;
 
     public LottoPrice(int lottoPrice) {
         thousandMultiValid(lottoPrice);
-        this.value = lottoPrice;
+        this.lottoPrice = lottoPrice;
     }
 
-
     private void thousandMultiValid(int amount) {
-        if (amount <= 0 || amount % 1000 != 0) {
-            throw new IllegalArgumentException("[ERROR] 금액은 천 단위의 양수여야 합니다.");
+        if (amount % LOTTO_ONE_UINT_PRICE != 0) {
+            throw new IllegalArgumentException(THOUSAND_MULTI_NUMBER_ERROR_MESSAGE);
         }
     }
 
     public int lottoCount() {
-        return value / 1000;
+        return lottoPrice / LOTTO_ONE_UINT_PRICE;
+    }
+
+    public double profit(double total) {
+        double profit = (total / lottoPrice) * PERCENTAGE;
+        return Math.round(profit * 10) / 10.0; // 반올림
     }
 }
