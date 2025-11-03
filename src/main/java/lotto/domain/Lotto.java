@@ -40,7 +40,7 @@ public class Lotto {
 
     private void validRange(int number) {
         if (number < LOTTO_NUMBER_MIN.getValue() || number > LOTTO_NUMBER_MAX.getValue()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(RANGE_ERROR_MESSAGE);
         }
     }
 
