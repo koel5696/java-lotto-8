@@ -3,9 +3,10 @@ package lotto.controller;
 import lotto.domain.BonusNumber;
 import lotto.domain.Lotto;
 import lotto.domain.LottoPrice;
+import lotto.domain.LottoResult;
 import lotto.domain.Lottos;
 import lotto.domain.WinLotto;
-import lotto.domain.dto.LottoResultDTO;
+import lotto.dto.LottoResultDTO;
 import lotto.service.LottoService;
 import lotto.util.validator.LottoInputValidator;
 import lotto.util.validator.NumberInputValidator;
@@ -24,47 +25,51 @@ public class LottoController {
     }
 
     public void run() {
-        LottoPrice lottoPrice = priceValidation();
-        Lottos lottos = lottoService.generateLottoService(lottoPrice);
+        LottoPrice lottoPrice = generatePrice();
+        Lottos lottos = lottoService.generateLottosService(lottoPrice);
         outputView.lottoNumbersOutput(lottoService.generateResult(lottos));
 
-        Lotto lotto = lottoValidation();
-        WinLotto winLotto = bonusNumberValidation(lotto);
-        LottoResultDTO lottoResultDTO = lottoService.DrawALottoService(lottos, winLotto);
-        double profit = lottoService.profitCalculatorService(lottoResultDTO, lottoPrice);
+        WinLotto winLotto = generateWinLotto();
+        LottoResult lottoResult = lottoService.DrawALottoService(lottos, winLotto);
+
+        LottoResultDTO lottoResultDTO = lottoService.profitCalculatorService(lottoResult, lottoPrice);
         outputView.lottoResultOutput(lottoResultDTO);
-        outputView.profitOutput(profit);
+        outputView.profitOutput(lottoResultDTO);
     }
 
-    private LottoPrice priceValidation() {
+    private LottoPrice generatePrice() {
         String priceInput = inputView.LottoAmountInput();
         try {
             return new LottoPrice(NumberInputValidator.numberInputValidator(priceInput));
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return priceValidation();
+            outputView.printErrorMessage(e);
+            return generatePrice();
         }
     }
 
-    private Lotto lottoValidation() {
+    private WinLotto generateWinLotto() {
+        Lotto lotto = defaultWinLottoGenerate();
+        return bonusNumberGenerate(lotto);
+    }
+
+    private Lotto defaultWinLottoGenerate() {
         String lottoInput = inputView.LottoNumberInput();
         try {
             return new Lotto(LottoInputValidator.lottoNumberInputValidator(lottoInput));
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return lottoValidation();
+            outputView.printErrorMessage(e);
+            return defaultWinLottoGenerate();
         }
     }
 
-    private WinLotto bonusNumberValidation(Lotto lotto) {
-        String bonusNumberInput = inputView.LottoBonusNumberInput();
+    private WinLotto bonusNumberGenerate(Lotto lotto) {
+        String bonusInput = inputView.LottoBonusNumberInput();
         try {
-            int bonus = NumberInputValidator.numberInputValidator(bonusNumberInput);
-            BonusNumber bonusNumber = new BonusNumber(bonus);
+            BonusNumber bonusNumber = new BonusNumber(NumberInputValidator.numberInputValidator(bonusInput));
             return new WinLotto(lotto, bonusNumber);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return bonusNumberValidation(lotto);
+            outputView.printErrorMessage(e);
+            return bonusNumberGenerate(lotto);
         }
     }
 
