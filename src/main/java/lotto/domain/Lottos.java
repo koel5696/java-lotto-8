@@ -4,18 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import lotto.domain.dto.LottoDTO;
-import lotto.domain.dto.LottoResultDTO;
-import lotto.util.randomNumber.RandomLottoExtraction;
+import lotto.dto.LottoDTO;
 
 public class Lottos {
     private final List<Lotto> lottos;
 
-    public Lottos(LottoPrice lottoPrice) {
-        this.lottos = Stream.generate(() -> new Lotto(RandomLottoExtraction.randomLottoExtraction()))
-                .limit(lottoPrice.lottoCount())
-                .toList();
+    public Lottos(List<Lotto> lottos) {
+        this.lottos = lottos;
     }
 
     public Map<Rank, Integer> lottosCompare(WinLotto winLotto) {
@@ -31,12 +26,8 @@ public class Lottos {
 
     public List<LottoDTO> getLottosDTO() {
         return lottos.stream()
-                .map(Lotto::toDto)
+                .map(Lotto::toLottoDto)
                 .toList();
-    }
-
-    public LottoResultDTO toLottoResultDTO(Map<Rank, Integer> lottoResult) {
-        return new LottoResultDTO(lottoResult);
     }
 
 }
